@@ -332,3 +332,82 @@ namespace zadanie_3
         }
     }
 }
+namespace zadanie_4
+{
+       using System;
+
+public interface IRefuelable
+{
+    void Refuel(decimal amount);
+}
+
+public abstract class Vehicle
+{
+    protected decimal speed; // Скорость
+
+    public Vehicle(decimal speed)
+    {
+        this.speed = speed;
+    }
+
+    public abstract void Move(); // Абстрактный метод для движения
+}
+
+public class Car : Vehicle, IRefuelable
+{
+    private string brand; // Марка автомобиля
+
+    public Car(string brand, decimal speed) : base(speed)
+    {
+        this.brand = brand;
+    }
+
+    public override void Move()
+    {
+        Console.WriteLine($"Автомобиль {brand} движется со скоростью {speed} км/ч.");
+    }
+
+    public void Refuel(decimal amount)
+    {
+        Console.WriteLine($"Автомобиль {brand} заправлен на {amount} литров.");
+    }
+}
+
+public class Motorcycle : Vehicle, IRefuelable
+{
+    private string type; // Тип мотоцикла
+
+    public Motorcycle(string type, decimal speed) : base(speed)
+    {
+        this.type = type;
+    }
+
+    public override void Move()
+    {
+        Console.WriteLine($"Мотоцикл типа {type} движется со скоростью {speed} км/ч.");
+    }
+
+    public void Refuel(decimal amount)
+    {
+        Console.WriteLine($"Мотоцикл типа {type} заправлен на {amount} литров.");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Vehicle myCar = new Car("Toyota", 120);
+        Vehicle myMotorcycle = new Motorcycle("Sport", 180);
+
+        myCar.Move(); // Движение автомобиля
+        myMotorcycle.Move(); // Движение мотоцикла
+
+        IRefuelable refuelableCar = (IRefuelable)myCar;
+        refuelableCar.Refuel(50); // Заправка автомобиля
+
+        IRefuelable refuelableMotorcycle = (IRefuelable)myMotorcycle;
+        refuelableMotorcycle.Refuel(20); // Заправка мотоцикла
+    }
+} 
+}
